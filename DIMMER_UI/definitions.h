@@ -1,0 +1,19 @@
+#ifndef definitions_h
+#define definitions_h
+
+#define DEFAULT_DIMMERS_QTY 2
+#define WLAN 0
+#define LAN 1
+#define STATUS_LED_GPIO 2
+#define BUTTON_CFG_GPIO 12
+
+#define DEFAULT_HOLD_TIME 400
+#define DEFAULT_REPEAT_ON_HOLD 35
+#define DEFAULT_MULTICLICK_TIME 350
+#define DEFAULT_BUTTON_STEP 5
+#define DEFAULT_FADE_EFFECT 500
+#define DEFAULT_ITERATION_DELAY 750
+#define DEFAULT_MIN_VALUE 0
+#define DEFAULT_MAX_VALUE 100
+
+#endif
