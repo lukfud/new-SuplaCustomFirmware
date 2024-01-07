@@ -79,6 +79,8 @@ class ModeParameter : public Supla::HtmlElement {
       sender->send("<div class=\"box\">");
       int32_t type_value[2] = {0,0}; // default value
       uint32_t state_value[2] = {0,0}; // default value
+      uint8_t staircase_value[2] = {0,0}; // default value
+
       for (int i = 0; i < 2; i++) {
 
         // form-field BEGIN
@@ -125,7 +127,40 @@ class ModeParameter : public Supla::HtmlElement {
         sender->send("</select>");
         sender->send("</div>");
         // form-field END
-      }
+        if (selectMode == SWITCH) {
+          for (auto element = Supla::Element::begin(); element !=nullptr;
+                                                   element = element->next()) {
+            if (element->getChannel()) {
+              auto channel = element->getChannel();
+              if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY) {
+                if (relay_[i]->isStaircaseFunction() == true) {
+                  char tagStairBuf[15], labelStairBuf[25];
+                  snprintf(tagStairBuf, sizeof(tagStairBuf),
+                                                         "%d_stair_mode", i+1);
+                  snprintf(labelStairBuf, sizeof(labelStairBuf),
+                                            "Staircase %d - reset time?", i+1);
+                  cfg->getUInt8(tagStairBuf, &staircase_value[i]);
+                  // form-field BEGIN
+                  sender->send("<div class=\"form-field right-checkbox\">");
+                  sender->sendLabelFor(tagStairBuf, labelStairBuf);
+                  sender->send("<label>");
+                  sender->send("<span class=\"switch\">");
+                  sender->send("<input type=\"checkbox\" value=\"on\" ");
+                  sender->send(checked(staircase_value[i]));
+                  sender->sendNameAndId(tagStairBuf);
+                  sender->send(">");
+                  sender->send("<span class=\"slider\"></span>");
+                  sender->send("</span>");
+                  sender->send("</label>");
+                  sender->send("</div>");
+                  // form-field END
+                }
+              }
+            }
+          }
+        }
+
+      };
       sender->send("</div>"); // end box
 
       sender->send("</div>"); // hidden div end
@@ -200,6 +235,7 @@ class ModeParameter : public Supla::HtmlElement {
   }
 
  protected:
+  bool checkboxFound[2] = {false, false};
 
 }; // ModeParameter
 
