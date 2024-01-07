@@ -4,6 +4,7 @@
 #include "variables.h"
 #include "html_classes.h"
 #include "custom_actions.h"
+#include "custom_iterate.h"
 
 void setup() {
 
@@ -51,7 +52,11 @@ void setup() {
       }
       button_[i] = new Supla::Control::Button(buttonPin[i], true, true);
       button_[i]->setButtonNumber(i+1);
-      button_[i]->addAction(Supla::TOGGLE, relay_[i], Supla::ON_CLICK_1);
+      if (isStaircase[i] == 1 && staircaseTag[i] == ON_) {
+        button_[i]->addAction(Supla::TURN_ON, relay_[i], Supla::ON_CLICK_1);
+      } else {
+        button_[i]->addAction(Supla::TOGGLE, relay_[i], Supla::ON_CLICK_1);
+      }
       at_[i] = new Supla::Control::ActionTrigger();
       at_[i]->setRelatedChannel(relay_[i]);
       at_[i]->attach(button_[i]);

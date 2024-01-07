@@ -41,12 +41,26 @@ if (cfg->getUInt32(COMFORT_DOWN, &comfortDownState)) {
 }
 
 for (int i = 0; i < 2; i++) {
-  char tagBuf[15];
-  snprintf(tagBuf, sizeof(tagBuf), "%d_rel_state", i+1);
-  if (cfg->getUInt32(tagBuf, &relayState[i])) {
-    SUPLA_LOG_DEBUG("# Param[%s]: %d", tagBuf, relayState[i]);
+  char tagStateBuf[15];
+  snprintf(tagStateBuf, sizeof(tagStateBuf), "%d_rel_state", i+1);
+  if (cfg->getUInt32(tagStateBuf, &relayState[i])) {
+    SUPLA_LOG_DEBUG("# Param[%s]: %d", tagStateBuf, relayState[i]);
   } else {
-    SUPLA_LOG_DEBUG("# Param[%s] is not set", tagBuf);
+    SUPLA_LOG_DEBUG("# Param[%s] is not set", tagStateBuf);
+  }
+  char tagStairBuf[15];
+  snprintf(tagStairBuf, sizeof(tagStairBuf), "%d_stair_mode", i+1);
+  if (cfg->getUInt8(tagStairBuf, &staircaseTag[i])) {
+    SUPLA_LOG_DEBUG("# Param[%s]: %d", tagStairBuf, staircaseTag[i]);
+  } else {
+    SUPLA_LOG_DEBUG("# Param[%s] is not set", tagStairBuf);
+  }
+  char isStairBuf[15];
+  snprintf(isStairBuf, sizeof(isStairBuf), "%d_is_stair", i+1);
+  if (cfg->getUInt8(isStairBuf, &isStaircase[i])) {
+    SUPLA_LOG_DEBUG("# Param[%s]: %d", isStairBuf, isStaircase[i]);
+  } else {
+    SUPLA_LOG_DEBUG("# Param[%s] is not set", isStairBuf);
   }
 }
 

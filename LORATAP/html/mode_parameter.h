@@ -75,7 +75,7 @@ class ModeParameter : public Supla::HtmlElement {
       sender->send("<div id=\"switch_hidden_div\" style=\"display: ");
       sender->send(displayed(value));
 
-       // box begin
+      // box begin
       sender->send("<div class=\"box\">");
       int32_t type_value[2] = {0,0}; // default value
       uint32_t state_value[2] = {0,0}; // default value
@@ -134,11 +134,11 @@ class ModeParameter : public Supla::HtmlElement {
               auto channel = element->getChannel();
               if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY) {
                 if (relay_[i]->isStaircaseFunction() == true) {
-                  char tagStairBuf[15], labelStairBuf[25];
+                  char tagStairBuf[15], labelStairBuf[35];
                   snprintf(tagStairBuf, sizeof(tagStairBuf),
                                                          "%d_stair_mode", i+1);
                   snprintf(labelStairBuf, sizeof(labelStairBuf),
-                                            "Staircase %d - reset time?", i+1);
+                                    "Staircase %d (toggle / reset time)", i+1);
                   cfg->getUInt8(tagStairBuf, &staircase_value[i]);
                   // form-field BEGIN
                   sender->send("<div class=\"form-field right-checkbox\">");
@@ -155,6 +155,7 @@ class ModeParameter : public Supla::HtmlElement {
                   sender->send("</div>");
                   // form-field END
                 }
+                break;
               }
             }
           }
@@ -230,8 +231,27 @@ class ModeParameter : public Supla::HtmlElement {
         cfg->setInt32(tagTypeBuf, inFormValue);
         return true;
       }
+      char tagStairBuf[15];
+      snprintf(tagStairBuf, sizeof(tagStairBuf), "%d_stair_mode", i+1);
+      if (cfg && strcmp(key, tagStairBuf) == 0) {
+        checkboxFound[i] = true;
+        uint8_t inFormValue = (strcmp(value, "on") == 0 ? 1 : 0);
+        cfg->setUInt8(tagStairBuf, inFormValue);
+        return true;
+      }
     }
     return false;
+  }
+
+  void onProcessingEnd() {
+    for (int i = 0; i < 2; i++) {
+      char tagStairBuf[15];
+      snprintf(tagStairBuf, sizeof(tagStairBuf), "%d_stair_mode", i+1);
+      if (!checkboxFound[i]) {
+        handleResponse(tagStairBuf, "off");
+      }
+      checkboxFound[i] = false;
+    }
   }
 
  protected:
