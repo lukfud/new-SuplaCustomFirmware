@@ -52,8 +52,10 @@ void setup() {
       }
       button_[i] = new Supla::Control::Button(buttonPin[i], true, true);
       button_[i]->setButtonNumber(i+1);
-      if (isStaircase[i] == 1 && staircaseTag[i] == ON_) {
+      if (channelFnc[i] == SUPLA_CHANNELFNC_STAIRCASETIMER &&
+                                                  staircaseModeTag[i] == ON_) {
         button_[i]->addAction(Supla::TURN_ON, relay_[i], Supla::ON_CLICK_1);
+        SUPLA_LOG_DEBUG("# Staircase function[%d] - reset time", 2*i);
       } else {
         button_[i]->addAction(Supla::TOGGLE, relay_[i], Supla::ON_CLICK_1);
       }

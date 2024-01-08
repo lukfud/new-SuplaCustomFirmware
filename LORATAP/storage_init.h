@@ -50,17 +50,17 @@ for (int i = 0; i < 2; i++) {
   }
   char tagStairBuf[15];
   snprintf(tagStairBuf, sizeof(tagStairBuf), "%d_stair_mode", i+1);
-  if (cfg->getUInt8(tagStairBuf, &staircaseTag[i])) {
-    SUPLA_LOG_DEBUG("# Param[%s]: %d", tagStairBuf, staircaseTag[i]);
+  if (cfg->getUInt8(tagStairBuf, &staircaseModeTag[i])) {
+    SUPLA_LOG_DEBUG("# Param[%s]: %d", tagStairBuf, staircaseModeTag[i]);
   } else {
     SUPLA_LOG_DEBUG("# Param[%s] is not set", tagStairBuf);
   }
-  char isStairBuf[15];
-  snprintf(isStairBuf, sizeof(isStairBuf), "%d_is_stair", i+1);
-  if (cfg->getUInt8(isStairBuf, &isStaircase[i])) {
-    SUPLA_LOG_DEBUG("# Param[%s]: %d", isStairBuf, isStaircase[i]);
+  char fncBuf[15];
+  snprintf(fncBuf, sizeof(fncBuf), "%d_fnc", 2*i);
+  if (cfg->getInt32(fncBuf, &channelFnc[i])) {
+    SUPLA_LOG_DEBUG("# Param[%s]: %d", fncBuf, channelFnc[i]);
   } else {
-    SUPLA_LOG_DEBUG("# Param[%s] is not set", isStairBuf);
+    SUPLA_LOG_DEBUG("# Param[%s] is not set", fncBuf);
   }
 }
 
