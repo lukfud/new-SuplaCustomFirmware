@@ -11,14 +11,7 @@ void setup() {
   Serial.begin(115200);
   wifi_ = new Supla::ESPWifi;
   #include "storage_init.h"
-/*
-  websrv_ = new Supla::Control::VirtualRelay(32);
-  websrv_->setDefaultStateOff();
-  websrv_->disableCountdownTimerFunction();
-  websrv_->getChannel()->setDefault(SUPLA_CHANNELFNC_POWERSWITCH);
-  websrv_->addAction(Supla::START_WEB_SERVER, custAct, Supla::ON_TURN_ON);
-  websrv_->addAction(Supla::STOP_WEB_SERVER, custAct, Supla::ON_TURN_OFF);
-*/
+
   cfgButton = new Supla::Control::Button(CFG_BUTTON, true, true);
   cfgButton->configureAsConfigButton(&SuplaDevice);
 
@@ -58,6 +51,11 @@ void setup() {
         SUPLA_LOG_DEBUG("# Staircase function[%d] - reset time", 2*i);
       } else {
         button_[i]->addAction(Supla::TOGGLE, relay_[i], Supla::ON_CLICK_1);
+      }
+      if (channelFnc[i] == SUPLA_CHANNELFNC_STAIRCASETIMER &&
+                                              noTimerOnEvent[i] != DISABLED_) {
+        button_[i]->addAction(
+                   Supla::TURN_ON_WITHOUT_TIMER, relay_[i], noTimerOnEvent[i]);
       }
       at_[i] = new Supla::Control::ActionTrigger();
       at_[i]->setRelatedChannel(relay_[i]);

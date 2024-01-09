@@ -29,14 +29,15 @@ class ModeParameter : public Supla::HtmlElement {
       sender->send("</select>");
       sender->send("</div>");
       // form-field END
+      
+      // end previous box
+      sender->send("</div>");
 
-      sender->send("</div>"); // end previous box
-
-      // hidden div begin
+      // blind hidden div begin
       sender->send("<div id=\"blind_hidden_div\" style=\"display: ");
       sender->send(displayed(!value));
 
-       // box begin
+      // box begin
       sender->send("<div class=\"box\">");
 
       // form-field BEGIN
@@ -66,22 +67,21 @@ class ModeParameter : public Supla::HtmlElement {
       sender->send("\">");
       sender->send("</div>");
       // form-field END
+      
+      sender->send("</div>");
+      // box end
 
-      sender->send("</div>"); // end box
+      sender->send("</div>");
+      // blind hidden div end
 
-      sender->send("</div>"); // hidden div end
-
-      // hidden div begin
+      // switch hidden div begin
       sender->send("<div id=\"switch_hidden_div\" style=\"display: ");
       sender->send(displayed(value));
 
-      // box begin
-      sender->send("<div class=\"box\">");
-      int32_t type_value[2] = {0,0}; // default value
-      uint32_t state_value[2] = {0,0}; // default value
-      uint8_t staircase_value[2] = {0,0}; // default value
-
       for (int i = 0; i < 2; i++) {
+
+        // box begin
+        sender->send("<div class=\"box\">");
 
         // form-field BEGIN
         char tagTypeBuf[15], labelTypeBuf[25];
@@ -93,12 +93,12 @@ class ModeParameter : public Supla::HtmlElement {
         sender->send("<select");
         sender->sendNameAndId(tagTypeBuf);
         sender->send(">");
-        cfg->getInt32(tagTypeBuf, &type_value[i]);
+        cfg->getInt32(tagTypeBuf, &button_type_value[i]);
         sender->send("<option value=\"0\"");
-        sender->send(selected(type_value[i] == 0));
+        sender->send(selected(button_type_value[i] == 0));
         sender->send(">MONOSTABLE</option>");
         sender->send("<option value=\"1\"");
-        sender->send(selected(type_value[i] == 1));
+        sender->send(selected(button_type_value[i] == 1));
         sender->send(">BISTABLE</option>");
         sender->send("</select>");
         sender->send("</div>");
@@ -114,15 +114,15 @@ class ModeParameter : public Supla::HtmlElement {
         sender->send("<select");
         sender->sendNameAndId(tagStateBuf);
         sender->send(">");
-        cfg->getUInt32(tagStateBuf, &state_value[i]);
+        cfg->getUInt32(tagStateBuf, &relay_state_value[i]);
         sender->send("<option value=\"0\"");
-        sender->send(selected(state_value[i] == 0));
+        sender->send(selected(relay_state_value[i] == 0));
         sender->send(">OFF</option>");
         sender->send("<option value=\"1\"");
-        sender->send(selected(state_value[i] == 1));
+        sender->send(selected(relay_state_value[i] == 1));
         sender->send(">ON</option>");
         sender->send("<option value=\"2\"");
-        sender->send(selected(state_value[i] == 2));
+        sender->send(selected(relay_state_value[i] == 2));
         sender->send(">RESTORE</option>");
         sender->send("</select>");
         sender->send("</div>");
@@ -132,21 +132,73 @@ class ModeParameter : public Supla::HtmlElement {
                                                    element = element->next()) {
             if (element->getChannel()) {
               auto channel = element->getChannel();
-              if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY) {
+              if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY &&
+                    channel->getDefaultFunction() !=
+                                SUPLA_CHANNELFNC_CONTROLLINGTHEROLLERSHUTTER) {
                 if (relay_[i]->isStaircaseFunction() == true) {
+                  // form-field BEGIN
+                  char tagNoTimerBuf[15], labelNoTimerBuf[25];
+                  snprintf(tagNoTimerBuf, sizeof(tagNoTimerBuf),
+                                                           "%d_no_timer", i+1);
+                  snprintf(labelNoTimerBuf, sizeof(labelNoTimerBuf),
+                                              "Turn on without timer %d", i+1);
+                  sender->send("<div class=\"form-field\">");
+                  sender->sendLabelFor(tagNoTimerBuf, labelNoTimerBuf);
+                  sender->send("<select");
+                  sender->sendNameAndId(tagNoTimerBuf);
+                  sender->send(">");
+                  cfg->getUInt32(tagNoTimerBuf, &no_timer_value[i]);
+                  sender->send("<option value=\"111\"");
+                  sender->send(selected(no_timer_value[i] == 111));
+                  sender->send(">DISABLED</option>");
+
+                  sender->send("<option value=\"");
+                  sender->send(Supla::ON_HOLD);
+                  sender->send("\"");
+                  sender->send(selected(no_timer_value[i] == Supla::ON_HOLD));
+                  sender->send(">ON HOLD</option>");
+
+                  sender->send("<option value=\"");
+                  sender->send(Supla::ON_CLICK_2);
+                  sender->send("\"");
+                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_2));
+                  sender->send(">ON CLICK 2</option>");
+
+                  sender->send("<option value=\"");
+                  sender->send(Supla::ON_CLICK_3);
+                  sender->send("\"");
+                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_3));
+                  sender->send(">ON CLICK 3</option>");
+
+                  sender->send("<option value=\"");
+                  sender->send(Supla::ON_CLICK_4);
+                  sender->send("\"");
+                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_4));
+                  sender->send(">ON CLICK 4</option>");
+
+                  sender->send("<option value=\"");
+                  sender->send(Supla::ON_CLICK_5);
+                  sender->send("\"");
+                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_5));
+                  sender->send(">ON CLICK 5</option>");  
+                
+                  sender->send("</select>");
+                  sender->send("</div>");
+                  // form-field END
+
+                  // form-field BEGIN
                   char tagStairBuf[15], labelStairBuf[35];
                   snprintf(tagStairBuf, sizeof(tagStairBuf),
                                                          "%d_stair_mode", i+1);
                   snprintf(labelStairBuf, sizeof(labelStairBuf),
                                     "Staircase %d (toggle / reset time)", i+1);
-                  cfg->getUInt8(tagStairBuf, &staircase_value[i]);
-                  // form-field BEGIN
+                  cfg->getUInt8(tagStairBuf, &staircase_mode_value[i]);
                   sender->send("<div class=\"form-field right-checkbox\">");
                   sender->sendLabelFor(tagStairBuf, labelStairBuf);
                   sender->send("<label>");
                   sender->send("<span class=\"switch\">");
                   sender->send("<input type=\"checkbox\" value=\"on\" ");
-                  sender->send(checked(staircase_value[i]));
+                  sender->send(checked(staircase_mode_value[i]));
                   sender->sendNameAndId(tagStairBuf);
                   sender->send(">");
                   sender->send("<span class=\"slider\"></span>");
@@ -159,14 +211,17 @@ class ModeParameter : public Supla::HtmlElement {
               }
             }
           }
-        }
+        } // selectMode SWITCH
+        sender->send("</div>");
+        // box end
 
       };
-      sender->send("</div>"); // end box
 
-      sender->send("</div>"); // hidden div end
-
-      sender->send("<div>"); // begin next box
+      sender->send("</div>");
+      // switch hidden div end
+      
+      // begin next box
+      sender->send("<div>");
 
 
       sender->send("<script>"
@@ -239,6 +294,18 @@ class ModeParameter : public Supla::HtmlElement {
         cfg->setUInt8(tagStairBuf, inFormValue);
         return true;
       }
+      char tagNoTimerBuf[15];
+      snprintf(tagNoTimerBuf, sizeof(tagNoTimerBuf), "%d_no_timer", i+1);
+      if (cfg && strcmp(key, tagNoTimerBuf) == 0) {
+        int inFormValue = stringToInt(value);
+        int inCfgTypeValue = 0;
+        cfg->getInt32(tagTypeBuf, &inCfgTypeValue);
+        if (inFormValue == Supla::ON_HOLD && inCfgTypeValue == 1) {
+          inFormValue = Supla::ON_CLICK_2;
+        }
+        cfg->setUInt32(tagNoTimerBuf, inFormValue);
+        return true;
+      }
     }
     return false;
   }
@@ -256,6 +323,10 @@ class ModeParameter : public Supla::HtmlElement {
 
  protected:
   bool checkboxFound[2] = {false, false};
+  int32_t button_type_value[2] = {0,0};
+  uint32_t relay_state_value[2] = {0,0};
+  uint8_t staircase_mode_value[2] = {0,0};
+  uint32_t no_timer_value[2] = {0,0};
 
 }; // ModeParameter
 

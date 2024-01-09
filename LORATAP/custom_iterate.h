@@ -9,13 +9,27 @@ class customIterate : public Supla::Element {
     if ((millis() - lastReadTime > 5000) && selectMode == SWITCH) {
       lastReadTime = millis();
       for (int i = 0; i < 2; i++) {
-        if (channelFnc[i] != relay_[i]->getChannel()->getDefaultFunction()) {
-          if (staircaseModeTag[i] == ON_) {
-            SuplaDevice.scheduleSoftRestart(2500);
+        for (auto element = Supla::Element::begin(); element !=nullptr;
+                                                   element = element->next()) {
+          if (element->getChannel()) {
+            auto channel = element->getChannel();
+            if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY &&
+                  channel->getDefaultFunction() !=
+                            SUPLA_CHANNELFNC_CONTROLLINGTHEROLLERSHUTTER) {
+              if (channelFnc[i] !=
+                             relay_[i]->getChannel()->getDefaultFunction()) {
+                if (staircaseModeTag[i] == ON_ ||
+                                              noTimerOnEvent[i] != DISABLED_) {
+                  SuplaDevice.scheduleSoftRestart(2500);
+                }
+                break;
+              }
+            }
           }
         }
       }
     }
+
   };
 
  protected:

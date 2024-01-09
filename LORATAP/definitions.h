@@ -1,7 +1,7 @@
 #ifndef DEFINITIONS_H_
 #define DEFINITIONS_H_
 
-#define SOFT_VERSION "24.01.08 @lukfud"
+#define SOFT_VERSION "24.01.09 @lukfud"
 //--------------------------------- 80 signs ---------------------------------|
 //                                                                static values
 #define BLIND 0
@@ -15,5 +15,6 @@
 #define OFF_ 0
 #define ON_ 1
 #define RESTORE_ 2
+#define DISABLED_ 111
 
 #endif

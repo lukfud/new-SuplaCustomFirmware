@@ -13,6 +13,7 @@ const char COMFORT_DOWN[] = "comfort_down";
 uint32_t comfortDownState = 75;
 uint8_t staircaseModeTag[2] = {0,0};
 int32_t channelFnc[2] = {0,0};
+uint32_t noTimerOnEvent[2] = {111,111};
 
 int relayPin[2] = {RELAY_1, RELAY_2};
 int buttonPin[2] = {BUTTON_1, BUTTON_2};

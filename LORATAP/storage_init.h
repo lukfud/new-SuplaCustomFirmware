@@ -62,6 +62,13 @@ for (int i = 0; i < 2; i++) {
   } else {
     SUPLA_LOG_DEBUG("# Param[%s] is not set", fncBuf);
   }
+  char tagNoTimerBuf[15];
+  snprintf(tagNoTimerBuf, sizeof(tagNoTimerBuf), "%d_no_timer", i+1);
+  if (cfg->getUInt32(tagNoTimerBuf, &noTimerOnEvent[i])) {
+    SUPLA_LOG_DEBUG("# Param[%s]: %d", tagNoTimerBuf, noTimerOnEvent[i]);
+  } else {
+    SUPLA_LOG_DEBUG("# Param[%s] is not set", tagNoTimerBuf);
+  }
 }
 
 #endif
