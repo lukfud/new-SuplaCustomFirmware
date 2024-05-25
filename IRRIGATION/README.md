@@ -1,9 +1,14 @@
-
 `Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.0`
+
+## `24.05.25`
+
+- **podlewa.cz / crontab**
+
+  zmiana statusu na "odblokowany", kiedy sterownik utracił połączenie z serwerem a nadszedł czas uruchomienia cyklu z wewnętrznego harmonogramu
 
 ## `24.04.28`
 
-- aktualizacja biblioteki
+- **aktualizacja biblioteki**
 
 - **flow meter**:
 
