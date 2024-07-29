@@ -16,7 +16,7 @@ Po aktualizacji pojwi się "konflikt kanałów". Wymagane będzie usunięcie urz
 
 - **crontab**
 
-  dodanie harmonogramu dla drugiego cyklu
+  dodany harmonogram dla drugiego cyklu
 
 ## `24.05.25`
 
