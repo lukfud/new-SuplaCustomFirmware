@@ -1,4 +1,22 @@
-`Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.0`
+`Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.x`
+
+## `24.07.29`
+
+```
+Po aktualizacji pojwi się "konflikt kanałów". Wymagane będzie usunięcie urządzenia z Cloud do ponownej rejestracji !!!
+```
+
+- **core**
+
+  dodana funkcja drugiego cyklu
+
+  dodane opóźnienie wyłączenia przekaźnika "master" po zakończeniu dowolnej sekcji, bądź po zakończeniu cyklu
+
+- **aktualizacja biblioteki**
+
+- **crontab**
+
+  dodanie harmonogramu DLA drugiego cyklu
 
 ## `24.05.25`
 
