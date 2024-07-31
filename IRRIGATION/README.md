@@ -1,5 +1,13 @@
 `Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.x`
 
+## `24.07.31`
+
+- **core**
+
+  dodane pominięcie sekcji w cyklach, aby pominąć sekcję należy ustawić jej czas na 0,5 s
+  
+  drobne poprawki
+
 ## `24.07.29`
 
 ```
