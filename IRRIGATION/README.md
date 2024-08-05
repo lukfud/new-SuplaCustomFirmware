@@ -1,5 +1,11 @@
 `Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.x`
 
+## `24.08.05`
+
+- **core**
+
+  dodana możliwość manualnej korekty czasu sekcji w zakresie 10 - 100%. Po włączeniu opcji w konfiguracji pojawi się kanał ściemniacza, który należy włączyć i ustawić żądany %. Po zakończeniu podlewania ściemniacz automatycznie się wyłączy.
+
 ## `24.07.31`
 
 - **core**
