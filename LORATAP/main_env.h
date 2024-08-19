@@ -57,5 +57,6 @@ Supla::Html::SelectInputParameter *relayState_[2] = {};
 Supla::Html::ButtonTypeParameters *buttonType_[2] = {};
 #include <supla/network/html/button_hold_time_parameters.h>
 #include <supla/network/html/button_multiclick_parameters.h>
+#include <supla/device/enter_cfg_mode_after_power_cycle.h>
 
 #endif

@@ -9,21 +9,13 @@ class customIterate : public Supla::Element {
     if ((millis() - lastReadTime > 5000) && selectMode == SWITCH) {
       lastReadTime = millis();
       for (int i = 0; i < 2; i++) {
-        for (auto element = Supla::Element::begin(); element !=nullptr;
-                                                   element = element->next()) {
-          if (element->getChannel()) {
-            auto channel = element->getChannel();
-            if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY &&
-                  channel->getDefaultFunction() !=
-                            SUPLA_CHANNELFNC_CONTROLLINGTHEROLLERSHUTTER) {
-              if (channelFnc[i] !=
-                             relay_[i]->getChannel()->getDefaultFunction()) {
-                if (staircaseModeTag[i] == ON_ ||
-                                              noTimerOnEvent[i] != DISABLED_) {
-                  SuplaDevice.scheduleSoftRestart(2500);
-                }
-                break;
-              }
+        if (relay_[i] != nullptr) {
+          auto newChannelFnc = relay_[i]->getChannel()->getDefaultFunction();
+          if (channelFnc[i] != newChannelFnc) {
+            if (staircaseModeTag[i] == ON_ || noTimerOnEvent[i] != DISABLED_) {
+              SUPLA_LOG_DEBUG(
+                     "# Relay[%d]: fnc has changed to %d", i+1, newChannelFnc);
+              SuplaDevice.scheduleSoftRestart(2500);
             }
           }
         }

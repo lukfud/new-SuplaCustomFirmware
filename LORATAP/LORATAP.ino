@@ -65,13 +65,15 @@ void setup() {
   
   #include "html.h"
 
+  new Supla::Device::EnterCfgModeAfterPowerCycle(5000, 3, true);
+
   httpUpdater.setup(suplaServer.getServerPtr(), "/update");
   SuplaDevice.setName(devName);
   SuplaDevice.setSwVersion(SOFT_VERSION);
   SuplaDevice.setSuplaCACert(suplaCACert);
   SuplaDevice.setSupla3rdPartyCACert(supla3rdCACert);
   SuplaDevice.begin();
-  SuplaDevice.getSrpcLayer()->client->setDebugLogs(false);
+  SuplaDevice.setProtoVerboseLog(false);
 }
 
 void loop() {

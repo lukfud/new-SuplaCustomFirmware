@@ -127,91 +127,81 @@ class ModeParameter : public Supla::HtmlElement {
         sender->send("</select>");
         sender->send("</div>");
         // form-field END
-        if (selectMode == SWITCH) {
-          for (auto element = Supla::Element::begin(); element !=nullptr;
-                                                   element = element->next()) {
-            if (element->getChannel()) {
-              auto channel = element->getChannel();
-              if (channel->getChannelType() == SUPLA_CHANNELTYPE_RELAY &&
-                    channel->getDefaultFunction() !=
-                                SUPLA_CHANNELFNC_CONTROLLINGTHEROLLERSHUTTER) {
-                if (relay_[i]->isStaircaseFunction() == true) {
-                  // form-field BEGIN
-                  char tagNoTimerBuf[15], labelNoTimerBuf[25];
-                  snprintf(tagNoTimerBuf, sizeof(tagNoTimerBuf),
-                                                           "%d_no_timer", i+1);
-                  snprintf(labelNoTimerBuf, sizeof(labelNoTimerBuf),
+
+        if (relay_[i] != nullptr) {
+          if (relay_[i]->isStaircaseFunction() == true) {
+
+            // form-field BEGIN
+            char tagNoTimerBuf[15], labelNoTimerBuf[25];
+            snprintf(tagNoTimerBuf, sizeof(tagNoTimerBuf), "%d_no_timer", i+1);
+            snprintf(labelNoTimerBuf, sizeof(labelNoTimerBuf),
                                               "Turn on without timer %d", i+1);
-                  sender->send("<div class=\"form-field\">");
-                  sender->sendLabelFor(tagNoTimerBuf, labelNoTimerBuf);
-                  sender->send("<select");
-                  sender->sendNameAndId(tagNoTimerBuf);
-                  sender->send(">");
-                  cfg->getUInt32(tagNoTimerBuf, &no_timer_value[i]);
-                  sender->send("<option value=\"111\"");
-                  sender->send(selected(no_timer_value[i] == 111));
-                  sender->send(">DISABLED</option>");
+            sender->send("<div class=\"form-field\">");
+            sender->sendLabelFor(tagNoTimerBuf, labelNoTimerBuf);
+            sender->send("<select");
+            sender->sendNameAndId(tagNoTimerBuf);
+            sender->send(">");
+            cfg->getUInt32(tagNoTimerBuf, &no_timer_value[i]);
+            sender->send("<option value=\"111\"");
+            sender->send(selected(no_timer_value[i] == 111));
+            sender->send(">DISABLED</option>");
 
-                  sender->send("<option value=\"");
-                  sender->send(Supla::ON_HOLD);
-                  sender->send("\"");
-                  sender->send(selected(no_timer_value[i] == Supla::ON_HOLD));
-                  sender->send(">ON HOLD</option>");
+            sender->send("<option value=\"");
+            sender->send(Supla::ON_HOLD);
+            sender->send("\"");
+            sender->send(selected(no_timer_value[i] == Supla::ON_HOLD));
+            sender->send(">ON HOLD</option>");
 
-                  sender->send("<option value=\"");
-                  sender->send(Supla::ON_CLICK_2);
-                  sender->send("\"");
-                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_2));
-                  sender->send(">ON CLICK 2</option>");
+            sender->send("<option value=\"");
+            sender->send(Supla::ON_CLICK_2);
+            sender->send("\"");
+            sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_2));
+            sender->send(">ON CLICK 2</option>");
 
-                  sender->send("<option value=\"");
-                  sender->send(Supla::ON_CLICK_3);
-                  sender->send("\"");
-                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_3));
-                  sender->send(">ON CLICK 3</option>");
+            sender->send("<option value=\"");
+            sender->send(Supla::ON_CLICK_3);
+            sender->send("\"");
+            sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_3));
+            sender->send(">ON CLICK 3</option>");
 
-                  sender->send("<option value=\"");
-                  sender->send(Supla::ON_CLICK_4);
-                  sender->send("\"");
-                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_4));
-                  sender->send(">ON CLICK 4</option>");
+            sender->send("<option value=\"");
+            sender->send(Supla::ON_CLICK_4);
+            sender->send("\"");
+            sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_4));
+            sender->send(">ON CLICK 4</option>");
 
-                  sender->send("<option value=\"");
-                  sender->send(Supla::ON_CLICK_5);
-                  sender->send("\"");
-                  sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_5));
-                  sender->send(">ON CLICK 5</option>");  
-                
-                  sender->send("</select>");
-                  sender->send("</div>");
-                  // form-field END
+            sender->send("<option value=\"");
+            sender->send(Supla::ON_CLICK_5);
+            sender->send("\"");
+            sender->send(selected(no_timer_value[i] == Supla::ON_CLICK_5));
+            sender->send(">ON CLICK 5</option>");  
 
-                  // form-field BEGIN
-                  char tagStairBuf[15], labelStairBuf[35];
-                  snprintf(tagStairBuf, sizeof(tagStairBuf),
-                                                         "%d_stair_mode", i+1);
-                  snprintf(labelStairBuf, sizeof(labelStairBuf),
+            sender->send("</select>");
+            sender->send("</div>");
+            // form-field END
+
+            // form-field BEGIN
+            char tagStairBuf[15], labelStairBuf[35];
+            snprintf(tagStairBuf, sizeof(tagStairBuf), "%d_stair_mode", i+1);
+            snprintf(labelStairBuf, sizeof(labelStairBuf),
                                     "Staircase %d (toggle / reset time)", i+1);
-                  cfg->getUInt8(tagStairBuf, &staircase_mode_value[i]);
-                  sender->send("<div class=\"form-field right-checkbox\">");
-                  sender->sendLabelFor(tagStairBuf, labelStairBuf);
-                  sender->send("<label>");
-                  sender->send("<span class=\"switch\">");
-                  sender->send("<input type=\"checkbox\" value=\"on\" ");
-                  sender->send(checked(staircase_mode_value[i]));
-                  sender->sendNameAndId(tagStairBuf);
-                  sender->send(">");
-                  sender->send("<span class=\"slider\"></span>");
-                  sender->send("</span>");
-                  sender->send("</label>");
-                  sender->send("</div>");
-                  // form-field END
-                }
-                break;
-              }
-            }
+            cfg->getUInt8(tagStairBuf, &staircase_mode_value[i]);
+            sender->send("<div class=\"form-field right-checkbox\">");
+            sender->sendLabelFor(tagStairBuf, labelStairBuf);
+            sender->send("<label>");
+            sender->send("<span class=\"switch\">");
+            sender->send("<input type=\"checkbox\" value=\"on\" ");
+            sender->send(checked(staircase_mode_value[i]));
+            sender->sendNameAndId(tagStairBuf);
+            sender->send(">");
+            sender->send("<span class=\"slider\"></span>");
+            sender->send("</span>");
+            sender->send("</label>");
+            sender->send("</div>");
+            // form-field END
+
           }
-        } // selectMode SWITCH
+        }
         sender->send("</div>");
         // box end
 
@@ -322,11 +312,11 @@ class ModeParameter : public Supla::HtmlElement {
   }
 
  protected:
-  bool checkboxFound[2] = {false, false};
-  int32_t button_type_value[2] = {0,0};
-  uint32_t relay_state_value[2] = {0,0};
-  uint8_t staircase_mode_value[2] = {0,0};
-  uint32_t no_timer_value[2] = {0,0};
+  bool checkboxFound[2] = {};
+  int32_t button_type_value[2] = {};
+  uint32_t relay_state_value[2] = {};
+  uint8_t staircase_mode_value[2] = {};
+  uint32_t no_timer_value[2] = {};
 
 }; // ModeParameter
 

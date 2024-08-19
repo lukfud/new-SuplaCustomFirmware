@@ -11,8 +11,8 @@ const char COMFORT_UP[] = "comfort_up";
 uint32_t comfortUpState = 25;
 const char COMFORT_DOWN[] = "comfort_down";
 uint32_t comfortDownState = 75;
-uint8_t staircaseModeTag[2] = {0,0};
-int32_t channelFnc[2] = {0,0};
+uint8_t staircaseModeTag[2] = {};
+int32_t channelFnc[2] = {};
 uint32_t noTimerOnEvent[2] = {111,111};
 
 int relayPin[2] = {RELAY_1, RELAY_2};

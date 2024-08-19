@@ -70,5 +70,6 @@ for (int i = 0; i < 2; i++) {
     SUPLA_LOG_DEBUG("# Param[%s] is not set", tagNoTimerBuf);
   }
 }
+cfg->commit();
 
 #endif
