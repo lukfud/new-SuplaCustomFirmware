@@ -1,5 +1,19 @@
 `Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.x`
 
+## `24.10.15`
+
+- **core**
+
+  dodana w konfiguracji opcja umożliwiająca wybranie dla której grupy (cykl 1 i 2) ma się włączać master
+  
+  dodana funkcja dolewu wody. Po włączeniu w konfiguracji, ostatni (bądż przedostatni, kiedy włączony jest master) przekaźnik włacza/wyłącza się w zależności od stanu czujnika S5
+  
+  dodane powiadomienie o zużyciu wody po zakończeniu cyklu. Konieczne jest wpisanie w konfiguracji ilości impulsów na litr wody
+  
+  drobne poprawki
+  
+- **aktualizacja biblioteki**
+
 ## `24.09.10`
 
 ```
@@ -11,7 +25,6 @@ Po aktualizacji domyślnie czujnik deszczu będzie wyłączony
   dodana w konfiguracji opcja włączenia/wyłączenia fizycznego czujnika deszczu
   
 - **aktualizacja biblioteki**
-
 
 ## `24.08.05`
 
