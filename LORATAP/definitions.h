@@ -1,12 +1,12 @@
 #ifndef DEFINITIONS_H_
 #define DEFINITIONS_H_
 
-#define SOFT_VERSION "24.07.31 @lukfud"
+#define SOFT_VERSION "24.12.01 @lukfud"
 //--------------------------------- 80 signs ---------------------------------|
 //                                                                static values
 #define BLIND 0
 #define SWITCH 1
-#define STATUS_LED_GPIO 3
+#define STATUS_LED_GPIO 2
 #define CFG_BUTTON 13
 #define RELAY_1 12
 #define RELAY_2 14

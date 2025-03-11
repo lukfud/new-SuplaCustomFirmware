@@ -17,6 +17,6 @@ new Supla::Html::DivBegin("box");
 new Supla::Html::H3Tag("Module Configuration");
 new Supla::Html::ButtonHoldTimeParameters();
 new Supla::Html::ButtonMulticlickParameters();
-new Supla::Html::ModeParameter();
+//new Supla::Html::ModeParameter();
 
 #endif

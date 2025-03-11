@@ -12,16 +12,15 @@ void setup() {
   wifi_ = new Supla::ESPWifi;
   #include "storage_init.h"
 
-  cfgButton = new Supla::Control::Button(CFG_BUTTON, true, true);
-  cfgButton->configureAsConfigButton(&SuplaDevice);
-
   if (selectMode == BLIND) {
     rs_ = new Supla::Control::RollerShutter(RELAY_1, RELAY_2);
+    rs_->setRsConfigMotorUpsideDownEnabled(true);
+    rs_->setRsConfigButtonsUpsideDownEnabled(true);
     rs_->configComfortUpValue(comfortUpState);
     rs_->configComfortDownValue(comfortDownState);
     for (int i = 0; i < 2; i++) {
       button_[i]  = new Supla::Control::Button(buttonPin[i], true, true);
-      button_[i]->setButtonNumber(i+1);
+      //button_[i]->setButtonNumber(i+2);
       button_[i]->addAction(Supla::OPEN_OR_STOP + i, rs_, Supla::ON_CLICK_1);
       button_[i]->addAction(Supla::COMFORT_UP_POSITION + i, rs_, Supla::ON_CLICK_2);
       button_[i]->addAction(Supla::RS_MOVE_UP + i, custAct, Supla::ON_HOLD);
@@ -64,6 +63,9 @@ void setup() {
   }
   
   #include "html.h"
+
+  cfgButton = new Supla::Control::Button(CFG_BUTTON, true, true);
+  cfgButton->configureAsConfigButton(&SuplaDevice);
 
   new Supla::Device::EnterCfgModeAfterPowerCycle(5000, 3, true);
 

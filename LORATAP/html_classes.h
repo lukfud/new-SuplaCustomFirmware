@@ -15,6 +15,6 @@ const char *displayed(bool isDisplayed) {
   return isDisplayed ? "block\">" : "none\">";
 }
 
-#include "html/mode_parameter.h"
+//#include "html/mode_parameter.h"
 
 #endif
