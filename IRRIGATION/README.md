@@ -1,5 +1,15 @@
 `Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.x`
 
+## `25.04.21`
+
+- **core**
+
+  dodana możliwość dowolnego dodawania sekcji do grup (cykl 1 i 2) - po aktualizacji należy je ustawić np.: 1,2,3,5,8
+  
+  dropbne poprawki
+  
+- **aktualizacja bibliotek**
+
 ## `24.10.15`
 
 - **core**
