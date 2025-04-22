@@ -3,17 +3,6 @@
 
   Supla::Storage::Init();
 
-#ifdef ARDUINO_ARCH_ESP32
-  if (Supla::Storage::ConfigInstance()->getInt8(
-                      Supla::Html::ConnectionSettingsTag, &selectConnection)) {
-    SUPLA_LOG_DEBUG("# Param[%s]: %d", Supla::Html::ConnectionSettingsTag,
-                                                             selectConnection);
-  } else {
-    SUPLA_LOG_DEBUG("# Param[%s]: is not set",
-                                           Supla::Html::ConnectionSettingsTag);
-  }
-#endif
-
   if (Supla::Storage::ConfigInstance()->getString(DEV_NAME, devName, 30)) {
     SUPLA_LOG_DEBUG("# Param[%s]: %s", DEV_NAME, devName);
   } else {

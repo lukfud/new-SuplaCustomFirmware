@@ -2,10 +2,8 @@
 #define definitions_h
 
 #define DEFAULT_DIMMERS_QTY 2
-#define WLAN 0
-#define LAN 1
 #define STATUS_LED_GPIO 2
-#define BUTTON_CFG_GPIO 12
+#define BUTTON_CFG_GPIO 0
 
 #define DEFAULT_HOLD_TIME 400
 #define DEFAULT_REPEAT_ON_HOLD 35

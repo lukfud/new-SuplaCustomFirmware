@@ -4,7 +4,6 @@
 #include <SuplaDevice.h>
 #include <supla/clock/clock.h>
 
-#include <supla/network/client.h>
 #include <supla/network/esp_wifi.h>
 Supla::ESPWifi *wifi = nullptr;
 #ifdef ARDUINO_ARCH_ESP32
@@ -51,16 +50,12 @@ Supla::LittleFsConfig configSupla(2048);
 #include <supla/network/html/device_info.h>
 #include <supla/network/html/protocol_parameters.h>
 #include <supla/network/html/status_led_parameters.h>
-#ifdef ARDUINO_ARCH_ESP8266
 #include <supla/network/html/wifi_parameters.h>
-#else
-#include <supla/network/html/connection_settings.h>
-#endif
+#include <supla/network/html/ethernet_parameters.h>
 #include <supla/network/html/custom_parameter.h>
 #include <supla/network/html/custom_text_parameter.h>
 #include <supla/network/html/select_input_parameter.h>
 
-int8_t selectConnection = 0;
 const char BTN_LOCK[] = "button_lock";
 int32_t lockEnabled = 0;
 const char DEV_NAME[] = "dev_name";
@@ -92,13 +87,9 @@ void setup() {
 
 #include "storage_init.h"
 
-  if (selectConnection == WLAN) {
-    wifi = new Supla::ESPWifi;
-  } else {
-#ifdef ARDUINO_ARCH_ESP32
-    eth = new Supla::WT32_ETH01(1);
-#endif
-  }
+  wifi = new Supla::ESPWifi;
+  eth = new Supla::WT32_ETH01(1);
+
   extmcp = new Supla::Control::ExtMCP23017(0x20);
   extpca = new Supla::Control::ExtPCA9685();
   extpca->setPWMFrequency(pwmFrequency);
@@ -146,7 +137,7 @@ void setup() {
   SuplaDevice.setSuplaCACert(suplaCACert);
   SuplaDevice.setSupla3rdPartyCACert(supla3rdCACert);
   SuplaDevice.begin();
-  SuplaDevice.getSrpcLayer()->client->setDebugLogs(false);
+  SuplaDevice.setProtoVerboseLog(false);
 };
 
 void loop() {
