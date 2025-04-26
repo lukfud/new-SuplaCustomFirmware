@@ -1,5 +1,11 @@
 `Nowa odsłona firmware'u dla sterwoników nawadniania w wersjach 4.2 i 5.x`
 
+## `25.04.26`
+
+- **core**
+
+  poprawiony błąd braku reakcji na czujniku binarnym S3 przy wyłączonej funkcji licznika impulsów
+
 ## `25.04.21`
 
 - **core**
