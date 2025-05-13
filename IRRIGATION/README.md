@@ -4,6 +4,12 @@
 
 - **core**
 
+  dodana możliwość zmiany logiki przycisków (1x klik <-> 2x klik)
+
+## `25.04.26`
+
+- **core**
+
   poprawiony błąd braku reakcji na czujniku binarnym S3 przy wyłączonej funkcji licznika impulsów
 
 ## `25.04.21`
