@@ -85,7 +85,7 @@ void setup() {
   Serial.begin(115200);
   new Supla::Clock;
 
-#include "storage_init.h"
+  #include "storage_init.h"
 
   wifi = new Supla::ESPWifi;
   eth = new Supla::WT32_ETH01(1);
@@ -130,7 +130,7 @@ void setup() {
   auto buttonCfg = new Supla::Control::Button(BUTTON_CFG_GPIO, true, true);
   buttonCfg->configureAsConfigButton(&SuplaDevice);
 
-#include "html.h"
+  #include "html.h"
 
   httpUpdater.setup(suplaServer.getServerPtr(), "/update");
   SuplaDevice.setName(devName);
@@ -138,8 +138,8 @@ void setup() {
   SuplaDevice.setSupla3rdPartyCACert(supla3rdCACert);
   SuplaDevice.begin();
   SuplaDevice.setProtoVerboseLog(false);
-};
+}
 
 void loop() {
   SuplaDevice.iterate();
-};
+}
